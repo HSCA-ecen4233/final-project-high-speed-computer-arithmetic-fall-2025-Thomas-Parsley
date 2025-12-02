@@ -24,16 +24,29 @@ module fma16 (x, y, z, mul, add, negr, negz,
    output logic [3:0]  flags;
 
    logic [4:0] 	       Xe, Ye, Ze;
-   logic [9:0] 	       Xm, Ym, Zm;
+   logic [10:0] 	       Xm, Ym, Zm; //Orginally was 9. Should the unpack add the extra bit?
    logic 	       Xs, Ys, Zs;
+
+   logic 	       Xsubnorm, Xzero, Xinf, XNaN, XsNaN;
+   logic 	       Ysubnorm, Yzero, Yinf, YNaN, YsNaN;
+   logic 	       Zsubnorm, Zzero, Zinf, ZNaN, ZsNaN;
+
+   unpack upX(.X(x), .Xsubnorm(Xsubnorm), .Xzero(Xzero), .Xinf(Xinf), .XNaN(XNaN), .XsNaN(XsNaN), .Xs(Xs), .Xe(Xe), .Xm(Xm));
+   unpack upX(.X(y), .Xsubnorm(Ysubnorm), .Xzero(Yzero), .Xinf(Yinf), .XNaN(YNaN), .XsNaN(YsNaN), .Xs(Ys), .Xe(Ye), .Xm(Ym));
+   unpack upX(.X(z), .Xsubnorm(Zsubnorm), .Xzero(Zzero), .Xinf(Zinf), .XNaN(ZNaN), .XsNaN(ZsNaN), .Xs(Zs), .Xe(Ze), .Xm(Zm));
 
    // stubbed ideas for instantiation ideas
    
    // fmaexpadd expadd(.Xe, .Ye, .XZero, .YZero, .Pe);
+
    // fmamult mult(.Xm, .Ym, .Pm);
+
    // fmasign sign(.OpCtrl, .Xs, .Ys, .Zs, .Ps, .As, .InvA);
+
    // fmaalign align(.Ze, .Zm, .XZero, .YZero, .ZZero, .Xe, .Ye, .Am, .ASticky, .KillProd);
+
    // fmaadd add(.Am, .Pm, .Ze, .Pe, .Ps, .KillProd, .ASticky, .AmInv, .PmKilled, .InvA, .Sm, .Se, .Ss);
+   
    // fmalza lza (.A(AmInv), .Pm(PmKilled), .Cin(InvA & (~ASticky | KillProd)), .sub(InvA), .SCnt);
 
  
