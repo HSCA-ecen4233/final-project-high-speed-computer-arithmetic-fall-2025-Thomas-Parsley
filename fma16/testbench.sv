@@ -46,10 +46,11 @@ module tb_fma16;
    // check results on falling edge of clk
    always @(negedge clk)
      if (~reset) begin // skip during reset
+     ///$fdisplay(handle3, "Pe: %h", dut.Pe);
 	if (result !== rexpected /* | flags !== flagsexpected */) begin  // check result
-           $fdisplay(handle3, "Error: inputs %h * %h + %h", x, y, z);
+           /*$fdisplay(handle3, "Error: inputs %h * %h + %h", x, y, z);
            $fdisplay(handle3, "  result = %h (%h expected) flags = %b (%b expected)", 
-		     result, rexpected, flags, flagsexpected);
+		     result, rexpected, flags, flagsexpected);*/
            errors = errors + 1;
 	end
 	vectornum = vectornum + 1;

@@ -14,12 +14,12 @@ module unpack(input logic [15:0] X,
 
     //Outputs
     assign Xs = X[15];
-    assign Xe = X[14:10] + ~Xenonzero
-    assign Xm = {Xenonzero, Xf[9:0]}
+    assign Xe = X[14:10] + ~Xenonzero; //Add because its checking if its zero
+    assign Xm = {Xenonzero, Xf[9:0]};
     assign Xsubnorm = ~Xenonzero & ~Xfzero;
     assign Xzero = ~Xenonzero & Xfzero;
     assign Xinf = Xemax & Xfzero;
     assign XNaN = Xemax & ~Xfzero;
     assign XsNaN = XNaN & ~Xf[9];
 
-endmodule;
+endmodule

@@ -31,23 +31,38 @@ module fma16 (x, y, z, mul, add, negr, negz,
    logic 	       Ysubnorm, Yzero, Yinf, YNaN, YsNaN;
    logic 	       Zsubnorm, Zzero, Zinf, ZNaN, ZsNaN;
 
+   //Intermediate Signals
+   logic [6:0] Pe, Se; //expadd, add
+   logic [21:0] Pm, PmKilled; //mult, add
+   logic Ps, As, InvA, ASticky, KillProd, Ss; //sign, align, add
+   logic [33:0] Am, AmInv, Sm; //align, add
+
    unpack upX(.X(x), .Xsubnorm(Xsubnorm), .Xzero(Xzero), .Xinf(Xinf), .XNaN(XNaN), .XsNaN(XsNaN), .Xs(Xs), .Xe(Xe), .Xm(Xm));
-   unpack upX(.X(y), .Xsubnorm(Ysubnorm), .Xzero(Yzero), .Xinf(Yinf), .XNaN(YNaN), .XsNaN(YsNaN), .Xs(Ys), .Xe(Ye), .Xm(Ym));
-   unpack upX(.X(z), .Xsubnorm(Zsubnorm), .Xzero(Zzero), .Xinf(Zinf), .XNaN(ZNaN), .XsNaN(ZsNaN), .Xs(Zs), .Xe(Ze), .Xm(Zm));
+   unpack upY(.X(y), .Xsubnorm(Ysubnorm), .Xzero(Yzero), .Xinf(Yinf), .XNaN(YNaN), .XsNaN(YsNaN), .Xs(Ys), .Xe(Ye), .Xm(Ym));
+   unpack upZ(.X(z), .Xsubnorm(Zsubnorm), .Xzero(Zzero), .Xinf(Zinf), .XNaN(ZNaN), .XsNaN(ZsNaN), .Xs(Zs), .Xe(Ze), .Xm(Zm));
 
    // stubbed ideas for instantiation ideas
    
    // fmaexpadd expadd(.Xe, .Ye, .XZero, .YZero, .Pe);
+   fmaexpadd expadd(.Xe(Xe), .Ye(Ye), .XZero(Xzero), .YZero(Yzero), .Pe(Pe));
 
    // fmamult mult(.Xm, .Ym, .Pm);
+   fmamult mult(.Xm(Xm), .Ym(Ym), .Pm(Pm));
 
    // fmasign sign(.OpCtrl, .Xs, .Ys, .Zs, .Ps, .As, .InvA);
+   fmasign sign(.OpCtrl(negz), .Xs(Xs), .Ys(Ys), .Zs(Zs), .Ps(Ps), .As(As), .InvA(InvA));
 
    // fmaalign align(.Ze, .Zm, .XZero, .YZero, .ZZero, .Xe, .Ye, .Am, .ASticky, .KillProd);
+   fmaalign align(.Ze(Ze), .Zm(Zm), .XZero(Xzero), .YZero(Yzero), .ZZero(Zzero), .Xe(Xe), .Ye(Ye), .Am(Am), .ASticky(ASticky), .KillProd(KillProd));
 
    // fmaadd add(.Am, .Pm, .Ze, .Pe, .Ps, .KillProd, .ASticky, .AmInv, .PmKilled, .InvA, .Sm, .Se, .Ss);
+   fmaadd fadd(.Am(Am), .Pm(Pm), .Ze(Ze), .Pe(Pe), .Ps(Ps), .KillProd(KillProd), .ASticky(ASticky), .AmInv(AmInv), .PmKilled(PmKilled), .InvA(InvA), .Sm(), .Se(), .Ss());
    
-   // fmalza lza (.A(AmInv), .Pm(PmKilled), .Cin(InvA & (~ASticky | KillProd)), .sub(InvA), .SCnt);
+   // fmalza lza (.A(AmInv), .Pm(PmKilled), .Cin(InvA & (~ASticky | KillProd)), .sub(InvA), .SCnt);//lzc (given) then shift the shifting amound from lzc
+
+   //Test Stuff
+   assign result = 16'b0;
+   assign flags = 5'b0;
 
  
 endmodule

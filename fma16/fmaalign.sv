@@ -10,13 +10,13 @@ module fmaalign(
     logic [12:0] ZmPreShifted;
     logic [43:0] ZmShifted;
 
-    assign Acnt = (Xe + Ye - 15) - Ze + 10 + 2; //Is Nf the amount of bits of the mantissa????
+    assign Acnt = (Xe + Ye - 15) - Ze + 12; //I believe this is an add
     assign KillZ = Acnt > 33;
     assign ZmPreShifted = Zm << 12;
-    assign ZmShifted = (KillProd) ? Zm : ((KillZ) ? 0 : ZmPreShifted >> Acnt); //You know, I have no clue if this is correct Im kinda just hoping
+    assign ZmShifted = (KillProd) ? Zm : ((KillZ) ? 0 : ZmPreShifted >> Acnt); 
 
-    assign KillProd = Acnt[6] | Xzero | Yzero;//Checking if Acnt < 0 as well
-    assign ASticky =  (KillProd) ? ~(Xzero | Yzero) : ((KillZ) ? ~Zzero : |(ZmShifted[9:0]));
+    assign KillProd = Acnt[6] | XZero | YZero;//Checking if Acnt < 0 as well
+    assign ASticky =  (KillProd) ? ~(XZero | YZero) : ((KillZ) ? ~ZZero : |(ZmShifted[9:0]));
     assign Am = ZmShifted >> 10;
 
 endmodule
