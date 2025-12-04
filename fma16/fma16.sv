@@ -32,10 +32,10 @@ module fma16 (x, y, z, mul, add, negr, negz,
    logic 	       Zsubnorm, Zzero, Zinf, ZNaN, ZsNaN;
 
    //Intermediate Signals
-   logic [6:0] Pe, Se; //expadd, add
+   logic [6:0] Pe, Se, ZeroCnt, SeNorm; //expadd, add, lzc
    logic [21:0] Pm, PmKilled; //mult, add
    logic Ps, As, InvA, ASticky, KillProd, Ss; //sign, align, add
-   logic [33:0] Am, AmInv, Sm; //align, add
+   logic [33:0] Am, AmInv, Sm, SmNorm; //align, add, lzc
 
    unpack upX(.X(x), .Xsubnorm(Xsubnorm), .Xzero(Xzero), .Xinf(Xinf), .XNaN(XNaN), .XsNaN(XsNaN), .Xs(Xs), .Xe(Xe), .Xm(Xm));
    unpack upY(.X(y), .Xsubnorm(Ysubnorm), .Xzero(Yzero), .Xinf(Yinf), .XNaN(YNaN), .XsNaN(YsNaN), .Xs(Ys), .Xe(Ye), .Xm(Ym));
@@ -50,18 +50,22 @@ module fma16 (x, y, z, mul, add, negr, negz,
    fmamult mult(.Xm(Xm), .Ym(Ym), .Pm(Pm));
 
    // fmasign sign(.OpCtrl, .Xs, .Ys, .Zs, .Ps, .As, .InvA);
-   fmasign sign(.OpCtrl(negz), .Xs(Xs), .Ys(Ys), .Zs(Zs), .Ps(Ps), .As(As), .InvA(InvA));
+   fmasign sign(.Xs(Xs), .Ys(Ys), .Zs(Zs), .Ps(Ps), .As(As), .InvA(InvA));
 
    // fmaalign align(.Ze, .Zm, .XZero, .YZero, .ZZero, .Xe, .Ye, .Am, .ASticky, .KillProd);
    fmaalign align(.Ze(Ze), .Zm(Zm), .XZero(Xzero), .YZero(Yzero), .ZZero(Zzero), .Xe(Xe), .Ye(Ye), .Am(Am), .ASticky(ASticky), .KillProd(KillProd));
 
    // fmaadd add(.Am, .Pm, .Ze, .Pe, .Ps, .KillProd, .ASticky, .AmInv, .PmKilled, .InvA, .Sm, .Se, .Ss);
-   fmaadd fadd(.Am(Am), .Pm(Pm), .Ze(Ze), .Pe(Pe), .Ps(Ps), .KillProd(KillProd), .ASticky(ASticky), .AmInv(AmInv), .PmKilled(PmKilled), .InvA(InvA), .Sm(), .Se(), .Ss());
+   fmaadd fadd(.Am(Am), .Pm(Pm), .Ze(Ze), .Pe(Pe), .Ps(Ps), .KillProd(KillProd), .ASticky(ASticky), .AmInv(AmInv), .PmKilled(PmKilled), .InvA(InvA), .Sm(Sm), .Se(Se), .Ss(Ss));
    
    // fmalza lza (.A(AmInv), .Pm(PmKilled), .Cin(InvA & (~ASticky | KillProd)), .sub(InvA), .SCnt);//lzc (given) then shift the shifting amound from lzc
+   lzc lzc(.num(Sm), .ZeroCnt(ZeroCnt));
+
+   normalizer normalizer(.Sm(Sm), .Se(Se), .ZeroCnt(ZeroCnt), .SmNorm(SmNorm), .SeNorm(SeNorm));
+
+   assign result = {Ss, SeNorm[4:0], SmNorm[32:23]};
 
    //Test Stuff
-   assign result = 16'b0;
    assign flags = 5'b0;
 
  

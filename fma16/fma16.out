@@ -1,9 +1,81 @@
 Error: inputs 3c00 * 3c00 + 0000
-  result = 0000 (3c00 expected) flags = 0000 (0000 expected)
+  result = ebff (3c00 expected) flags = 0000 (0000 expected)
+
+ UnpackX || Xs: 0 | Xe: 15 : 0f | Xm: 400 : 10000000000 ||
+ UnpackY || Ys: 0 | Ye: 15 : 0f | Ym: 400 : 10000000000 ||
+ UnpackZ || Zs: 0 | Ze:  1 : 01 | Zm: 000 : 00000000000 ||
+ UnpackX || Zero: 0 | SubN: 0 | Inf: 0 | NaN: 0 | sNaN: 0 | ExpMax: 0 ||
+ UnpackY || Zero: 0 | SubN: 0 | Inf: 0 | NaN: 0 | sNaN: 0 | ExpMax: 0 ||
+ UnpackZ || Zero: 1 | SubN: 0 | Inf: 0 | NaN: 0 | sNaN: 0 | ExpMax: 0 ||
+ Expadd || Pe: 0f :  15 ||
+ mult || Pm: 1048576 : 100000 ||
+ sign || Ps: 0 : 0 | As: 0 : 0 | InvA: 0 ||
+ align || Am:           0 : 000000000 | ASticky: 0 | KillProd: 0 ||
+ align || Acnt:  26 | KillProd: 0 | KillZ: 0 | Zm: 000 | ZmPre: 00000000000 | ZmShif: 00000000000 ||
+ add || Sm: 17179869182 : 3fffffffe | Se:  15 : 0f | Ss: 1 ||
+ lzc || ZeroCnt:   0 ||
+ normalizer || SmNorm: 3fffffffe | SeNorm: 1a ||
+
+------------------------------------------------------------------------
+
 Error: inputs 3c00 * 3e00 + 0000
-  result = 0000 (3e00 expected) flags = 0000 (0000 expected)
+  result = ebff (3e00 expected) flags = 0000 (0000 expected)
+
+ UnpackX || Xs: 0 | Xe: 15 : 0f | Xm: 400 : 10000000000 ||
+ UnpackY || Ys: 0 | Ye: 15 : 0f | Ym: 600 : 11000000000 ||
+ UnpackZ || Zs: 0 | Ze:  1 : 01 | Zm: 000 : 00000000000 ||
+ UnpackX || Zero: 0 | SubN: 0 | Inf: 0 | NaN: 0 | sNaN: 0 | ExpMax: 0 ||
+ UnpackY || Zero: 0 | SubN: 0 | Inf: 0 | NaN: 0 | sNaN: 0 | ExpMax: 0 ||
+ UnpackZ || Zero: 1 | SubN: 0 | Inf: 0 | NaN: 0 | sNaN: 0 | ExpMax: 0 ||
+ Expadd || Pe: 0f :  15 ||
+ mult || Pm: 1572864 : 180000 ||
+ sign || Ps: 0 : 0 | As: 0 : 0 | InvA: 0 ||
+ align || Am:           0 : 000000000 | ASticky: 0 | KillProd: 0 ||
+ align || Acnt:  26 | KillProd: 0 | KillZ: 0 | Zm: 000 | ZmPre: 00000000000 | ZmShif: 00000000000 ||
+ add || Sm: 17179869182 : 3fffffffe | Se:  15 : 0f | Ss: 1 ||
+ lzc || ZeroCnt:   0 ||
+ normalizer || SmNorm: 3fffffffe | SeNorm: 1a ||
+
+------------------------------------------------------------------------
+
 Error: inputs 3e00 * 3c00 + 0000
-  result = 0000 (3e00 expected) flags = 0000 (0000 expected)
+  result = ebff (3e00 expected) flags = 0000 (0000 expected)
+
+ UnpackX || Xs: 0 | Xe: 15 : 0f | Xm: 600 : 11000000000 ||
+ UnpackY || Ys: 0 | Ye: 15 : 0f | Ym: 400 : 10000000000 ||
+ UnpackZ || Zs: 0 | Ze:  1 : 01 | Zm: 000 : 00000000000 ||
+ UnpackX || Zero: 0 | SubN: 0 | Inf: 0 | NaN: 0 | sNaN: 0 | ExpMax: 0 ||
+ UnpackY || Zero: 0 | SubN: 0 | Inf: 0 | NaN: 0 | sNaN: 0 | ExpMax: 0 ||
+ UnpackZ || Zero: 1 | SubN: 0 | Inf: 0 | NaN: 0 | sNaN: 0 | ExpMax: 0 ||
+ Expadd || Pe: 0f :  15 ||
+ mult || Pm: 1572864 : 180000 ||
+ sign || Ps: 0 : 0 | As: 0 : 0 | InvA: 0 ||
+ align || Am:           0 : 000000000 | ASticky: 0 | KillProd: 0 ||
+ align || Acnt:  26 | KillProd: 0 | KillZ: 0 | Zm: 000 | ZmPre: 00000000000 | ZmShif: 00000000000 ||
+ add || Sm: 17179869182 : 3fffffffe | Se:  15 : 0f | Ss: 1 ||
+ lzc || ZeroCnt:   0 ||
+ normalizer || SmNorm: 3fffffffe | SeNorm: 1a ||
+
+------------------------------------------------------------------------
+
 Error: inputs 3e00 * 3e00 + 0000
-  result = 0000 (4080 expected) flags = 0000 (0000 expected)
+  result = ebff (4080 expected) flags = 0000 (0000 expected)
+
+ UnpackX || Xs: 0 | Xe: 15 : 0f | Xm: 600 : 11000000000 ||
+ UnpackY || Ys: 0 | Ye: 15 : 0f | Ym: 600 : 11000000000 ||
+ UnpackZ || Zs: 0 | Ze:  1 : 01 | Zm: 000 : 00000000000 ||
+ UnpackX || Zero: 0 | SubN: 0 | Inf: 0 | NaN: 0 | sNaN: 0 | ExpMax: 0 ||
+ UnpackY || Zero: 0 | SubN: 0 | Inf: 0 | NaN: 0 | sNaN: 0 | ExpMax: 0 ||
+ UnpackZ || Zero: 1 | SubN: 0 | Inf: 0 | NaN: 0 | sNaN: 0 | ExpMax: 0 ||
+ Expadd || Pe: 0f :  15 ||
+ mult || Pm: 2359296 : 240000 ||
+ sign || Ps: 0 : 0 | As: 0 : 0 | InvA: 0 ||
+ align || Am:           0 : 000000000 | ASticky: 0 | KillProd: 0 ||
+ align || Acnt:  26 | KillProd: 0 | KillZ: 0 | Zm: 000 | ZmPre: 00000000000 | ZmShif: 00000000000 ||
+ add || Sm: 17179869182 : 3fffffffe | Se:  15 : 0f | Ss: 1 ||
+ lzc || ZeroCnt:   0 ||
+ normalizer || SmNorm: 3fffffffe | SeNorm: 1a ||
+
+------------------------------------------------------------------------
+
          4 tests completed with          4 errors

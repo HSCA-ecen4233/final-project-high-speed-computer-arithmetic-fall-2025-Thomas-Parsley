@@ -11,9 +11,12 @@ module fmaadd(
 
     logic [33:0] PreSum, NegPreSum;
     logic NegSum;
+    logic NotKillProd;
+
+    assign NotKillProd = ~KillProd;
 
     assign AmInv = (~InvA) ? Am : ~Am;
-    assign PmKilled = Pm & ~KillProd;
+    assign PmKilled = Pm & NotKillProd;
     assign PreSum = PmKilled + AmInv + (~ASticky | KillProd) & InvA;
     assign NegPreSum = Am + ~PmKilled + (~ASticky | ~KillProd);
     assign NegSum = NegPreSum[33];

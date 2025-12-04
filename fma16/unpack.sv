@@ -4,17 +4,18 @@ module unpack(input logic [15:0] X,
     output logic [10:0] Xm);
 
     // Intermediate Signals
-    logic Xemax, Xenonzero, Xfzero;
+    logic Xemax, Xenonzero, Xfzero, NotXenz;
     logic [9:0] Xf;
 
     assign Xemax = &X[14:10];
     assign Xenonzero = |X[14:10];
     assign Xf = X[9:0];
     assign Xfzero = ~(|Xf[9:0]);
+    assign NotXenz = ~Xenonzero;
 
     //Outputs
     assign Xs = X[15];
-    assign Xe = X[14:10] + ~Xenonzero; //Add because its checking if its zero
+    assign Xe =  X[14:10] + NotXenz; //This is wack
     assign Xm = {Xenonzero, Xf[9:0]};
     assign Xsubnorm = ~Xenonzero & ~Xfzero;
     assign Xzero = ~Xenonzero & Xfzero;

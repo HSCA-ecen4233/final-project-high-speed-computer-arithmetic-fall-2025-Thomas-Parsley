@@ -7,16 +7,19 @@ module fmaalign(
 
     logic [6:0] Acnt;
     logic KillZ;
-    logic [12:0] ZmPreShifted;
-    logic [43:0] ZmShifted;
+    logic [43:0] ZmPreShifted;
+    logic [43:0] ZmShifted;//13+11+22
 
-    assign Acnt = (Xe + Ye - 15) - Ze + 12; //I believe this is an add
+    assign Acnt = ({2'b0, Xe} + {2'b0, Ye} - 7'd15) - {2'b0, Ze} + 7'd12;//(Xe + Ye - 15) - Ze + 12; //I believe this is an add
     assign KillZ = Acnt > 33;
-    assign ZmPreShifted = Zm << 12;
-    assign ZmShifted = (KillProd) ? Zm : ((KillZ) ? 0 : ZmPreShifted >> Acnt); 
+    assign ZmPreShifted = {33'b0, Zm} << 12;
 
-    assign KillProd = Acnt[6] | XZero | YZero;//Checking if Acnt < 0 as well
+    assign KillProd = (Acnt < 0) | XZero | YZero;//Checking if Acnt < 0 as well
+
+    assign ZmShifted = (KillProd) ? {12'b0, Zm, 21'b0} : ((KillZ) ? 44'b0 : ZmPreShifted >> Acnt); 
+    
     assign ASticky =  (KillProd) ? ~(XZero | YZero) : ((KillZ) ? ~ZZero : |(ZmShifted[9:0]));
+    
     assign Am = ZmShifted >> 10;
 
 endmodule

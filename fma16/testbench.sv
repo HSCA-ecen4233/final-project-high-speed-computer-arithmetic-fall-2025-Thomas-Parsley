@@ -46,11 +46,44 @@ module tb_fma16;
    // check results on falling edge of clk
    always @(negedge clk)
      if (~reset) begin // skip during reset
-     ///$fdisplay(handle3, "Pe: %h", dut.Pe);
 	if (result !== rexpected /* | flags !== flagsexpected */) begin  // check result
-           /*$fdisplay(handle3, "Error: inputs %h * %h + %h", x, y, z);
+           $fdisplay(handle3, "Error: inputs %h * %h + %h", x, y, z);
            $fdisplay(handle3, "  result = %h (%h expected) flags = %b (%b expected)", 
-		     result, rexpected, flags, flagsexpected);*/
+		     result, rexpected, flags, flagsexpected);
+          
+          $fdisplay(handle3, "");
+          //UNPACK
+          $fdisplay(handle3, " UnpackX || Xs: %b | Xe: %d : %h | Xm: %h : %b ||", dut.Xs, dut.Xe, dut.Xe, dut.Xm, dut.Xm);
+          $fdisplay(handle3, " UnpackY || Ys: %b | Ye: %d : %h | Ym: %h : %b ||", dut.Ys, dut.Ye, dut.Ye, dut.Ym, dut.Ym);
+          $fdisplay(handle3, " UnpackZ || Zs: %b | Ze: %d : %h | Zm: %h : %b ||", dut.Zs, dut.Ze, dut.Ze, dut.Zm, dut.Zm);
+
+          $fdisplay(handle3, " UnpackX || Zero: %b | SubN: %b | Inf: %b | NaN: %b | sNaN: %b | ExpMax: %b ||", dut.Xzero, dut.Xsubnorm, dut.Xinf, dut.XNaN, dut.XsNaN, dut.upX.Xemax);
+          $fdisplay(handle3, " UnpackY || Zero: %b | SubN: %b | Inf: %b | NaN: %b | sNaN: %b | ExpMax: %b ||", dut.Yzero, dut.Ysubnorm, dut.Yinf, dut.YNaN, dut.YsNaN, dut.upY.Xemax);
+          $fdisplay(handle3, " UnpackZ || Zero: %b | SubN: %b | Inf: %b | NaN: %b | sNaN: %b | ExpMax: %b ||", dut.Zzero, dut.Zsubnorm, dut.Zinf, dut.ZNaN, dut.ZsNaN, dut.upZ.Xemax);
+
+          //EXPADD
+          $fdisplay(handle3, " Expadd || Pe: %h : %d ||", dut.Pe, dut.Pe);
+
+          //MULT
+          $fdisplay(handle3, " mult || Pm: %d : %h ||", dut.Pm, dut.Pm);/**/
+
+          //SIGN
+          $fdisplay(handle3, " sign || Ps: %d : %h | As: %d : %h | InvA: %b ||", dut.Ps, dut.Ps, dut.As, dut.As, dut.InvA);
+
+          //ALIGN
+          $fdisplay(handle3, " align || Am: %d : %h | ASticky: %b | KillProd: %b ||", dut.Am, dut.Am, dut.ASticky, dut.KillProd);
+          $fdisplay(handle3, " align || Acnt: %d | KillProd: %b | KillZ: %b | Zm: %h | ZmPre: %h | ZmShif: %h ||", dut.align.Acnt, dut.align.KillProd, dut.align.KillZ, dut.align.Zm, dut.align.ZmPreShifted, dut.align.ZmShifted);
+          
+          $fdisplay(handle3, " add || Sm: %d : %h | Se: %d : %h | Ss: %b ||", dut.Sm, dut.Sm, dut.Se, dut.Se, dut.Ss);
+
+          $fdisplay(handle3, " lzc || ZeroCnt: %d ||", dut.ZeroCnt);
+
+          $fdisplay(handle3, " normalizer || SmNorm: %h | SeNorm: %h ||", dut.SmNorm, dut.SeNorm);
+
+          $fdisplay(handle3, "");
+          $fdisplay(handle3, "------------------------------------------------------------------------");
+          $fdisplay(handle3, "");
+          //$fdisplay(handle3, "Recieved || Pe: %h | Pm: %h | ", dut.Pe); //Other Things
            errors = errors + 1;
 	end
 	vectornum = vectornum + 1;
