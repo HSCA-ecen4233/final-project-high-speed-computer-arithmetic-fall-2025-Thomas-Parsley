@@ -6,7 +6,7 @@ module tb_fma16;
    logic        mul, add, negp, negz;
    logic [1:0] 	roundmode;
    logic [31:0] vectornum, errors;
-   logic [75:0] testvectors[10000:0];
+   logic [75:0] testvectors[30000:0];
    logic [3:0] 	flags, flagsexpected; // Invalid, Overflow, Underflow, Inexact
    
    integer 	handle3;
@@ -31,7 +31,7 @@ module tb_fma16;
   // at start of test, load vectors and pulse reset
   initial
     begin
-      $readmemh("tests/fmul_0.tv", testvectors);
+      $readmemh("tests/fma_special_rz.tv", testvectors);
       vectornum = 0; errors = 0;
       reset = 1; #22; reset = 0;
     end
@@ -47,7 +47,7 @@ module tb_fma16;
    always @(negedge clk)
      if (~reset) begin // skip during reset
 	if (result !== rexpected /* | flags !== flagsexpected */) begin  // check result
-           $fdisplay(handle3, "Error: inputs %h * %h + %h", x, y, z);
+           $fdisplay(handle3, "Error: inputs %h * %h + %h. RoundMode:", x, y, z, roundmode);
            $fdisplay(handle3, "  result = %h (%h expected) flags = %b (%b expected)", 
 		     result, rexpected, flags, flagsexpected);
           
@@ -72,9 +72,10 @@ module tb_fma16;
 
           //ALIGN
           $fdisplay(handle3, " align || Am: %d : %h | ASticky: %b | KillProd: %b ||", dut.Am, dut.Am, dut.ASticky, dut.KillProd);
-          $fdisplay(handle3, " align || Acnt: %d | KillProd: %b | KillZ: %b | Zm: %h | ZmPre: %h | ZmShif: %h ||", dut.align.Acnt, dut.align.KillProd, dut.align.KillZ, dut.align.Zm, dut.align.ZmPreShifted, dut.align.ZmShifted);
+          //$fdisplay(handle3, " align || Acnt: %d : %h | KillProd: %b | KillZ: %b | Zm: %h | ZmPre: %h | ZmShif: %h ||", dut.align.Acnt, dut.align.Acnt, dut.align.KillProd, dut.align.KillZ, dut.align.Zm, dut.align.ZmPreShifted, dut.align.ZmShifted);
           
           $fdisplay(handle3, " add || Sm: %d : %h | Se: %d : %h | Ss: %b ||", dut.Sm, dut.Sm, dut.Se, dut.Se, dut.Ss);
+          //$fdisplay(handle3, " add || Am: %d : %h | ~PmKilled: %d : %h | ~ASticky: %b | ~KillProd: %b | NPSKilled: %h | NPSSKprod: %h ||", dut.fadd.Am, dut.fadd.Am, dut.fadd.NotPmKilled, dut.fadd.NotPmKilled, dut.fadd.NotASticky, dut.fadd.NotKillProd, dut.fadd.NPSKilled, dut.fadd.NPSSKprod);
 
           $fdisplay(handle3, " lzc || ZeroCnt: %d ||", dut.ZeroCnt);
 

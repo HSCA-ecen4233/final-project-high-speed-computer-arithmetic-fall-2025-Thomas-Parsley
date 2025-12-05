@@ -35,7 +35,8 @@ module fma16 (x, y, z, mul, add, negr, negz,
    logic [6:0] Pe, Se, ZeroCnt, SeNorm; //expadd, add, lzc
    logic [21:0] Pm, PmKilled; //mult, add
    logic Ps, As, InvA, ASticky, KillProd, Ss; //sign, align, add
-   logic [33:0] Am, AmInv, Sm, SmNorm; //align, add, lzc
+   logic [35:0] AmInv, Sm, SmNorm; //align, add, lzc
+   logic [35:0] Am;
 
    unpack upX(.X(x), .Xsubnorm(Xsubnorm), .Xzero(Xzero), .Xinf(Xinf), .XNaN(XNaN), .XsNaN(XsNaN), .Xs(Xs), .Xe(Xe), .Xm(Xm));
    unpack upY(.X(y), .Xsubnorm(Ysubnorm), .Xzero(Yzero), .Xinf(Yinf), .XNaN(YNaN), .XsNaN(YsNaN), .Xs(Ys), .Xe(Ye), .Xm(Ym));
@@ -63,10 +64,12 @@ module fma16 (x, y, z, mul, add, negr, negz,
 
    normalizer normalizer(.Sm(Sm), .Se(Se), .ZeroCnt(ZeroCnt), .SmNorm(SmNorm), .SeNorm(SeNorm));
 
-   assign result = {Ss, SeNorm[4:0], SmNorm[32:23]};
+   round round(.Ss(Ss), .Se(SeNorm), .Sm(SmNorm), .ASticky(ASticky), .RndMode(2'b00), .result(result));
+
+   //assign result = {Ss, SeNorm[4:0], SmNorm[34:25]};//round nearest zero
 
    //Test Stuff
-   assign flags = 5'b0;
+   assign flags = 4'b0;
 
  
 endmodule
