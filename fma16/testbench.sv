@@ -31,7 +31,7 @@ module tb_fma16;
   // at start of test, load vectors and pulse reset
   initial
     begin
-      $readmemh("tests/fma_special_rz.tv", testvectors);
+      $readmemh("tests/fma_2.tv", testvectors);
       vectornum = 0; errors = 0;
       reset = 1; #22; reset = 0;
     end
@@ -51,7 +51,7 @@ module tb_fma16;
            $fdisplay(handle3, "  result = %h (%h expected) flags = %b (%b expected)", 
 		     result, rexpected, flags, flagsexpected);
           
-          $fdisplay(handle3, "");
+          /*$fdisplay(handle3, "");
           //UNPACK
           $fdisplay(handle3, " UnpackX || Xs: %b | Xe: %d : %h | Xm: %h : %b ||", dut.Xs, dut.Xe, dut.Xe, dut.Xm, dut.Xm);
           $fdisplay(handle3, " UnpackY || Ys: %b | Ye: %d : %h | Ym: %h : %b ||", dut.Ys, dut.Ye, dut.Ye, dut.Ym, dut.Ym);
@@ -65,7 +65,7 @@ module tb_fma16;
           $fdisplay(handle3, " Expadd || Pe: %h : %d ||", dut.Pe, dut.Pe);
 
           //MULT
-          $fdisplay(handle3, " mult || Pm: %d : %h ||", dut.Pm, dut.Pm);/**/
+          $fdisplay(handle3, " mult || Pm: %d : %h ||", dut.Pm, dut.Pm);
 
           //SIGN
           $fdisplay(handle3, " sign || Ps: %d : %h | As: %d : %h | InvA: %b ||", dut.Ps, dut.Ps, dut.As, dut.As, dut.InvA);
@@ -81,9 +81,10 @@ module tb_fma16;
 
           $fdisplay(handle3, " normalizer || SmNorm: %h | SeNorm: %h ||", dut.SmNorm, dut.SeNorm);
 
-          $fdisplay(handle3, "");
+          $fdisplay(handle3, "");*/
+          $fdisplay(handle3, " normalizer || Rnd: %b | G: %b | R: %b | S: %b | ASticky: %b ||", dut.round.Rnd, dut.flagss.g, dut.flagss.r, dut.flagss.s, dut.flagss.ASticky);
           $fdisplay(handle3, "------------------------------------------------------------------------");
-          $fdisplay(handle3, "");
+          $fdisplay(handle3, "");/**/
           //$fdisplay(handle3, "Recieved || Pe: %h | Pm: %h | ", dut.Pe); //Other Things
            errors = errors + 1;
 	end

@@ -25,11 +25,14 @@ module fma16 (x, y, z, mul, add, negr, negz,
 
    logic [4:0] 	       Xe, Ye, Ze;
    logic [10:0] 	       Xm, Ym, Zm; //Orginally was 9. Should the unpack add the extra bit?
-   logic 	       Xs, Ys, Zs;
+   logic 	       Xs, Ys, Zs, g, r, s;
 
    logic 	       Xsubnorm, Xzero, Xinf, XNaN, XsNaN;
    logic 	       Ysubnorm, Yzero, Yinf, YNaN, YsNaN;
    logic 	       Zsubnorm, Zzero, Zinf, ZNaN, ZsNaN;
+
+   logic [15:0] Midresult;
+   logic nv, of, uf, nx, Rnndd;
 
    //Intermediate Signals
    logic [6:0] Pe, Se, ZeroCnt, SeNorm; //expadd, add, lzc
@@ -64,12 +67,14 @@ module fma16 (x, y, z, mul, add, negr, negz,
 
    normalizer normalizer(.Sm(Sm), .Se(Se), .ZeroCnt(ZeroCnt), .SmNorm(SmNorm), .SeNorm(SeNorm));
 
-   round round(.Ss(Ss), .Se(SeNorm), .Sm(SmNorm), .ASticky(ASticky), .RndMode(2'b00), .result(result));
+   round round(.Ss(Ss), .Se(SeNorm), .Sm(SmNorm), .ASticky(ASticky), .RndMode(2'b00), .result(Midresult), .G(g), .R(r), .S(s));
+
+   fmaflags flagss(.Xs(Xs), .Ys(Ys), .Zs(Zs), .Xsnan(XsNaN), .Ysnan(YsNaN), .Zsnan(ZsNaN), .Xnan(XNaN), .Ynan(YNaN), .Znan(ZNaN), .Xinf(Xinf), .Yinf(Yinf), .Zinf(Zinf), .XZero(Xzero), .YZero(Yzero), .ZZero(Zzero), .g(g), .r(r), .s(s), .ASticky(ASticky), .Senorm(SeNorm), .int_result(Midresult), .adjusted_result(result), .flag_nv(nv), .flag_of(of), .flag_uf(uf), .flag_nx(nx));
 
    //assign result = {Ss, SeNorm[4:0], SmNorm[34:25]};//round nearest zero
 
    //Test Stuff
-   assign flags = 4'b0;
+   assign flags = {nv, of, uf, nx};
 
  
 endmodule

@@ -4,16 +4,17 @@ module round(
     input logic [35:0] Sm,
     input logic ASticky,
     input logic [1:0] RndMode,
-    output logic [15:0] result);
+    output logic [15:0] result,
+    output logic G, R, S);
 
-    logic G, R, S, L, Rnd;
+    logic L, Rnd;
     logic [11:0] MidSm;
     logic [10:0] OutSm;
     logic [6:0] OutSe;
 
     assign G = Sm[24];
     assign R = Sm[23];
-    assign S = ASticky;
+    assign S = |Sm[22:0];
     assign L = Sm[25];
 
     always_comb begin

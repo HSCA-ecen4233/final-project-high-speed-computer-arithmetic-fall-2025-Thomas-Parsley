@@ -27,7 +27,7 @@ if [file exists work] {
 vlib work
 
 # compile source files
-vlog -lint fma16.sv testbench.sv fmaadd.sv fmamult.sv fmasign.sv fmaalign.sv lzc.sv fmaexpadd.sv unpack.sv round.sv
+vlog -lint fma16.sv testbench.sv fmaadd.sv fmamult.sv fmasign.sv fmaalign.sv lzc.sv fmaexpadd.sv unpack.sv round.sv fmaflags.sv
 
 # start and run simulation
 vsim -voptargs=+acc work.tb_fma16

@@ -1,7 +1,7 @@
 # do fma16.do
 # QuestaSim-64 vlog 2023.4_3 Compiler 2024.02 Feb 17 2024
-# Start time: 04:45:25 on Dec 05,2025
-# vlog -lint fma16.sv testbench.sv fmaadd.sv fmamult.sv fmasign.sv fmaalign.sv lzc.sv fmaexpadd.sv unpack.sv round.sv 
+# Start time: 14:52:17 on Dec 05,2025
+# vlog -lint fma16.sv testbench.sv fmaadd.sv fmamult.sv fmasign.sv fmaalign.sv lzc.sv fmaexpadd.sv unpack.sv round.sv fmaflags.sv 
 # -- Compiling module fma16
 # -- Compiling module tb_fma16
 # -- Compiling module fmaadd
@@ -13,13 +13,14 @@
 # -- Compiling module fmaexpadd
 # -- Compiling module unpack
 # -- Compiling module round
+# -- Compiling module fmaflags
 # 
 # Top level modules:
 # 	tb_fma16
-# End time: 04:45:25 on Dec 05,2025, Elapsed time: 0:00:00
+# End time: 14:52:18 on Dec 05,2025, Elapsed time: 0:00:01
 # Errors: 0, Warnings: 0
 # vsim -voptargs="+acc" work.tb_fma16 
-# Start time: 04:45:25 on Dec 05,2025
+# Start time: 14:52:18 on Dec 05,2025
 # ** Note: (vsim-3812) Design is being optimized...
 # ** Warning: (vopt-10587) Some optimizations are turned off because the +acc switch is in effect. This will cause your simulation to run slowly. Please use -access/-debug to maintain needed visibility.
 # ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=0, Warnings=1.
@@ -49,11 +50,10 @@
 # Loading work.lzc(fast)
 # Loading work.normalizer(fast)
 # Loading work.round(fast)
-# ** Warning: (vsim-PLI-3407) Too many data words read on line 30703 of file "tests/fma_special_rz.tv". (Current address [30001], address range [0:30000])    : testbench.sv(34)
-#    Time: 0 ns  Iteration: 0  Instance: /tb_fma16
-# ** Note: $stop    : testbench.sv(94)
-#    Time: 300025 ns  Iteration: 1  Instance: /tb_fma16
-# Break in Module tb_fma16 at testbench.sv line 94
-# Stopped at testbench.sv line 94
-# End time: 04:45:25 on Dec 05,2025, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 2
+# Loading work.fmaflags(fast)
+# ** Note: $stop    : testbench.sv(95)
+#    Time: 222985 ns  Iteration: 1  Instance: /tb_fma16
+# Break in Module tb_fma16 at testbench.sv line 95
+# Stopped at testbench.sv line 95
+# End time: 14:52:18 on Dec 05,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 1
