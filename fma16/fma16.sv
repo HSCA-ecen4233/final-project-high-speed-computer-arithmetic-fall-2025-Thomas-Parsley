@@ -34,6 +34,10 @@ module fma16 (x, y, z, mul, add, negr, negz,
    logic [15:0] Midresult;
    logic nv, of, uf, nx, Rnndd;
 
+   logic [1:0] RoundMode;
+
+   assign RoundMode = roundmode;
+
    //Intermediate Signals
    logic [6:0] Pe, Se, ZeroCnt, SeNorm; //expadd, add, lzc
    logic [21:0] Pm, PmKilled; //mult, add
@@ -67,14 +71,14 @@ module fma16 (x, y, z, mul, add, negr, negz,
 
    normalizer normalizer(.Sm(Sm), .Se(Se), .ZeroCnt(ZeroCnt), .SmNorm(SmNorm), .SeNorm(SeNorm));
 
-   round round(.Ss(Ss), .Se(SeNorm), .Sm(SmNorm), .ASticky(ASticky), .RndMode(2'b00), .result(Midresult), .G(g), .R(r), .S(s));
+   round round(.Ss(Ss), .Se(SeNorm), .Sm(SmNorm), .ASticky(ASticky), .RndMode(RoundMode), .ZZero(Zzero), .Zs(Zs), .result(Midresult));
 
-   fmaflags flagss(.Xs(Xs), .Ys(Ys), .Zs(Zs), .Xsnan(XsNaN), .Ysnan(YsNaN), .Zsnan(ZsNaN), .Xnan(XNaN), .Ynan(YNaN), .Znan(ZNaN), .Xinf(Xinf), .Yinf(Yinf), .Zinf(Zinf), .XZero(Xzero), .YZero(Yzero), .ZZero(Zzero), .g(g), .r(r), .s(s), .ASticky(ASticky), .Senorm(SeNorm), .int_result(Midresult), .adjusted_result(result), .flag_nv(nv), .flag_of(of), .flag_uf(uf), .flag_nx(nx));
+   fmaflags flagss(.Xs(Xs), .Ys(Ys), .Zs(Zs), .Xsnan(XsNaN), .Ysnan(YsNaN), .Zsnan(ZsNaN), .Xnan(XNaN), .Ynan(YNaN), .Znan(ZNaN), .Xinf(Xinf), .Yinf(Yinf), .Zinf(Zinf), .XZero(Xzero), .YZero(Yzero), .ZZero(Zzero), .ASticky(ASticky), .Senorm(SeNorm), .Smnorm(SmNorm), .roundmode(RoundMode), .MidResult(Midresult), .AdjResult(result), .flags(flags));
 
    //assign result = {Ss, SeNorm[4:0], SmNorm[34:25]};//round nearest zero
 
    //Test Stuff
-   assign flags = {nv, of, uf, nx};
+   //assign flags = {nv, of, uf, nx};
 
  
 endmodule

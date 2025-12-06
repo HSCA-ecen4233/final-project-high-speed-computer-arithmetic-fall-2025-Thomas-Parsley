@@ -31,7 +31,7 @@ module tb_fma16;
   // at start of test, load vectors and pulse reset
   initial
     begin
-      $readmemh("tests/fma_2.tv", testvectors);
+      $readmemh("tests/fma_special_rz.tv", testvectors);
       vectornum = 0; errors = 0;
       reset = 1; #22; reset = 0;
     end
@@ -82,7 +82,7 @@ module tb_fma16;
           $fdisplay(handle3, " normalizer || SmNorm: %h | SeNorm: %h ||", dut.SmNorm, dut.SeNorm);
 
           $fdisplay(handle3, "");*/
-          $fdisplay(handle3, " normalizer || Rnd: %b | G: %b | R: %b | S: %b | ASticky: %b ||", dut.round.Rnd, dut.flagss.g, dut.flagss.r, dut.flagss.s, dut.flagss.ASticky);
+          //$fdisplay(handle3, " normalizer || Rnd: %b | G: %b | R: %b | S: %b | ASticky: %b ||", dut.round.Rnd, dut.flagss.g, dut.flagss.r, dut.flagss.s, dut.flagss.ASticky);
           $fdisplay(handle3, "------------------------------------------------------------------------");
           $fdisplay(handle3, "");/**/
           //$fdisplay(handle3, "Recieved || Pe: %h | Pm: %h | ", dut.Pe); //Other Things
