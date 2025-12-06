@@ -60,14 +60,17 @@ The design was moved to a different repository to do the synthesis. This reposit
   >./fma16/reports/fma16_area.rep
 
   >Hierarchical cell
+
   >fma16: 13239.8002 (Absolute Total)
 
 **Timing Report:**  
   >./fma16/reports/fma16_timing.rep
 
   >data required time: 2.000000 (500MHz)
-  data arrival time: -2.015215 (~496MHz)
-  slack (VIOLATED): -0.015215
+
+  >data arrival time: -2.015215 (~496MHz)
+
+  >slack (VIOLATED): -0.015215
 
 **Critical Path Annotated on Block Diagram:**  
    ![Design Schematic](CriticalPath.jpg)
@@ -76,6 +79,7 @@ The design was moved to a different repository to do the synthesis. This reposit
   >./fma16/reports/fma16_power.rep
   
   >DUT Name: Switch Pwr | Int Pwr | Leak Pwr | Total Pwr
+
   >fma16: 2.451mW | 2.231mW | 9.27e+03nW | 4.690mW
 
 **Energy-Delay Product (EDP):**  
